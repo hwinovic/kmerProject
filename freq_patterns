@@ -1,0 +1,26 @@
+def pattern_count(text, patt):
+    count = 0
+    for i in range(0,len(text)-len(patt)+1):
+        if text[i:i + len(patt)] == patt:
+            count = count + 1
+    return count
+
+def freq_words(text, k):
+    FP = []
+    count = []
+    for i in range(0,len(text)-k+1):
+        pattern = text[i:i+k]
+        count.append(pattern_count(text, pattern))
+    for i2 in range(0,len(text)-k+1):
+        FP.append(text[i2:i2+k])
+# 2 lines below remove duplicates
+    FP = set(FP)
+    FP = list(FP)
+    return FP
+
+txt ='ATCGCGA'
+k = 2
+ret = freq_words(txt,k)
+print len(ret)
+for x in ret:
+    print x,
