@@ -1,0 +1,36 @@
+# function reads in the fasta file
+def open_fasta():
+    fasta = {}
+    with open("TIGR02012 (1).ffn") as opened_file:
+        for line in opened_file:
+            line = line.strip()
+            if not line:
+                continue
+            if line.startswith(">"):
+                sequence_name = line[1:]
+                if sequence_name not in fasta:
+                    fasta[sequence_name] = []
+                continue
+            sequence = line
+            fasta[sequence_name].append(sequence)
+    return fasta.values()
+
+# function takes the sequence list and the kmer length
+def big_kmer_lst (fasta_vals, k):
+    kmer_dict = {}
+    for seq in fasta_vals:
+        print seq[0],
+        for i in range(0,len(seq)-k+1):
+            kmer = seq[i:i+k]
+            if kmer not in kmer_dict:
+                kmer_dict[kmer] = 0
+            kmer_dict[kmer] = kmer_dict[kmer] + 1
+    return kmer_dict
+
+seqs = open_fasta()
+ret_dict = big_kmer_lst(seqs, 3)
+#ret_dict = big_kmer_lst(["ABC", "ACB", "ABC"], 3)
+
+# prints the kmer, count pairs of the dictionary 
+for key, value in sorted(ret_dict.iteritems(), key=lambda (k,v): (v,k)):
+    print "%s: %s" % (key, value)
