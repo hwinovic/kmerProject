@@ -1,7 +1,7 @@
 # function reads in the fasta file
 def open_fasta():
     fasta = {}
-    with open("TIGR02012 (1).ffn") as opened_file:
+    with open("TIGR02012.ffn") as opened_file:
         for line in opened_file:
             line = line.strip()
             if not line:
@@ -31,6 +31,6 @@ seqs = open_fasta()
 ret_dict = big_kmer_lst(seqs, 3)
 #ret_dict = big_kmer_lst(["ABC", "ACB", "ABC"], 3)
 
-# prints the kmer, count pairs of the dictionary 
+# prints the kmer, count pairs of the dictionary
 for key, value in sorted(ret_dict.iteritems(), key=lambda (k,v): (v,k)):
     print "%s: %s" % (key, value)
